@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  :root.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Light mode (default) */
+  body {
+    @apply bg-[#FAFAFA] text-[#111111];
+  }
+
+  /* Dark mode */
+  :root.dark body {
+    @apply bg-[#0F0F0F] text-[#EEEEEE];
+  }
+
+  /* Input and border transitions */
+  input, button, select, textarea {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer utilities {
+  .slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #0055FF;
+    cursor: pointer;
+    transition: transform 0.2s ease-out;
+  }
+
+  .slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+
+  .slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #0055FF;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease-out;
+  }
+
+  .slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.2s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -10px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  @keyframes dropdownOpen {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  }
+
+  @keyframes dropdownClose {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+    }
+  }
+
+  .dropdown-enter {
+    animation: dropdownOpen 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .dropdown-exit {
+    animation: dropdownClose 0.2s cubic-bezier(0.7, 0, 1, 0.5) forwards;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes spin-smooth {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .animate-pulse-soft {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .button-hover-lift {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .button-hover-lift:hover {
+    transform: translateY(-1px);
+  }
+
+  .button-hover-lift:active {
+    transform: translateY(0px);
+  }
+
+  .input-focus-ring {
+    transition: all 0.2s ease-out;
+  }
+
+  .input-focus-ring:focus {
+    box-shadow: 0 0 0 2px rgba(0, 85, 255, 0.1);
+  }
+
+  .smooth-transition {
+    transition: all 0.3s cubic-bezier(0.3, 0, 0.3, 1);
+  }
+
+  .group-hover\:scale-105:hover {
+    transform: scale(1.02);
+  }
+
+  /* Dark mode color overrides */
+  :root.dark {
+    /* Text colors */
+    --text-primary: #EEEEEE;
+    --text-secondary: #999999;
+    --text-tertiary: #666666;
+    --text-light: #444444;
+
+    /* Background colors */
+    --bg-primary: #0F0F0F;
+    --bg-secondary: #1A1A1A;
+    --bg-tertiary: #252525;
+
+    /* Border colors */
+    --border-primary: #333333;
+    --border-secondary: #444444;
+  }
+}
