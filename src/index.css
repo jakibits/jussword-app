@@ -149,23 +149,50 @@
   }
 
   .button-hover-lift {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .button-hover-lift:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+  }
+  
+  :root.dark .button-hover-lift:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   }
 
   .button-hover-lift:active {
-    transform: translateY(0px);
+    transform: translateY(0px) scale(0.98);
   }
 
   .input-focus-ring {
-    transition: all 0.2s ease-out;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .input-focus-ring:focus {
-    box-shadow: 0 0 0 2px rgba(0, 85, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.15);
+    transform: translateY(-1px);
+  }
+
+  .animate-fade-up-1 {
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .animate-fade-up-2 {
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+  }
+  .animate-fade-up-3 {
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .smooth-transition {

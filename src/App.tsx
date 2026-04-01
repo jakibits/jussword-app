@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Copy, Check, RotateCw } from 'lucide-react';
 import { generatePassword } from './utils/passwordGenerator';
 import { useTheme } from './context/ThemeContext';
@@ -58,10 +58,13 @@ function AppContent() {
     }
   }, [length, uppercase, lowercase, numbers, symbols, vibe, isUserEditing]);
 
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
   const handleCopy = async () => {
     await navigator.clipboard.writeText(password);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setCopied(false), 2000);
   };
 
   const showToastMessage = (message: string) => {
@@ -91,6 +94,7 @@ function AppContent() {
     if (type === 'lowercase') setLowercase(value);
     if (type === 'numbers') setNumbers(value);
     if (type === 'symbols') setSymbols(value);
+    setIsUserEditing(false);
   };
 
   return (
@@ -101,14 +105,14 @@ function AppContent() {
 
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-4">
         <div className="w-full max-w-2xl">
-          <header className="text-center mb-8">
+          <header className="text-center mb-8 animate-fade-up-1">
             <h1 className="text-5xl font-bold tracking-tight mb-2">jussword</h1>
             <p className="text-xs text-[#999999] dark:text-[#666666] tracking-wide">
               <span className="font-medium text-[#444444] dark:text-[#AAAAAA]">ju</span>st a simple secure pa<span className="font-medium text-[#444444] dark:text-[#AAAAAA]">ssword</span> generator
             </p>
           </header>
 
-          <div className="space-y-4">
+          <div className="space-y-4 animate-fade-up-2">
             <div className="flex flex-col gap-3">
               <input
                 type="text"
@@ -161,7 +165,10 @@ function AppContent() {
                 min="1"
                 max="50"
                 value={length}
-                onChange={(e) => setLength(parseInt(e.target.value))}
+                onChange={(e) => {
+                  setLength(parseInt(e.target.value));
+                  setIsUserEditing(false);
+                }}
                 className="w-full h-1 bg-[#E5E5E5] dark:bg-[#333333] appearance-none cursor-pointer slider smooth-transition"
               />
             </div>
@@ -183,7 +190,10 @@ function AppContent() {
                       name="vibe"
                       value={option.value}
                       checked={vibe === option.value}
-                      onChange={(e) => setVibe(e.target.value as VibePreset)}
+                      onChange={(e) => {
+                        setVibe(e.target.value as VibePreset);
+                        setIsUserEditing(false);
+                      }}
                       className="mt-0.5 w-4 h-4 accent-[#0055FF] smooth-transition"
                     />
                     <div className="flex-1 min-w-0">
@@ -225,7 +235,7 @@ function AppContent() {
         </div>
       </div>
 
-      <footer className="text-center py-3 text-xs text-[#999999] dark:text-[#666666] smooth-transition">
+      <footer className="text-center py-3 text-xs text-[#999999] dark:text-[#666666] smooth-transition animate-fade-up-3">
         vibe coded with 💙 by <a href="https://bio.link/jakib" target="_blank" rel="noopener noreferrer" className="font-medium text-[#0055FF] hover:text-[#0044CC] smooth-transition underline">jakib</a>
       </footer>
     </div>

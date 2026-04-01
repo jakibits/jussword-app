@@ -11,7 +11,13 @@ export function ThemeToggle() {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+        setIsOpen((prev) => {
+          if (prev) {
+            setIsAnimating(true);
+            setTimeout(() => setIsAnimating(false), 200);
+          }
+          return false;
+        });
       }
     }
 
@@ -20,16 +26,11 @@ export function ThemeToggle() {
   }, []);
 
   const handleToggle = () => {
-    if (isOpen) {
+    setIsOpen((prev) => {
       setIsAnimating(true);
-      setTimeout(() => {
-        setIsOpen(false);
-        setIsAnimating(false);
-      }, 200);
-    } else {
-      setIsOpen(true);
-      setIsAnimating(true);
-    }
+      setTimeout(() => setIsAnimating(false), 200);
+      return !prev;
+    });
   };
 
   const options = [
@@ -61,11 +62,9 @@ export function ThemeToggle() {
               key={value}
               onClick={() => {
                 setTheme(value);
+                setIsOpen(false);
                 setIsAnimating(true);
-                setTimeout(() => {
-                  setIsOpen(false);
-                  setIsAnimating(false);
-                }, 200);
+                setTimeout(() => setIsAnimating(false), 200);
               }}
               className={`w-full px-4 py-2.5 flex items-center gap-2 text-sm transition-all duration-150 ${
                 theme === value

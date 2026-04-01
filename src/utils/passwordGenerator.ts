@@ -15,6 +15,7 @@ const SYMBOLS = '!@#$%^&*()_+-=[]{}|;:,.<>?';
 const UPPERCASE_READABLE = 'ABCDEFGHJKMNPQRSTUVWXYZ';
 const LOWERCASE_READABLE = 'abcdefghjkmnpqrstuvwxyz';
 const NUMBERS_READABLE = '23456789';
+const SYMBOLS_READABLE = '@#$%*+-=?';
 
 const CONSONANTS = 'bcdfghjklmnpqrstvwxyz';
 const VOWELS = 'aeiou';
@@ -50,7 +51,7 @@ function generateStandardPassword(options: GeneratePasswordOptions): string {
     if (uppercase) charset += UPPERCASE_READABLE;
     if (lowercase) charset += LOWERCASE_READABLE;
     if (numbers) charset += NUMBERS_READABLE;
-    if (symbols) charset += SYMBOLS;
+    if (symbols) charset += SYMBOLS_READABLE;
   } else {
     if (uppercase) charset += UPPERCASE;
     if (lowercase) charset += LOWERCASE;
