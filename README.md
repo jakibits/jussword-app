@@ -4,7 +4,7 @@
 
   # jussword
 
-  **Just a simple, secure password generator for the masses.**
+  **jussword - Simple, Secure & Memorable Password Generator. 100% offline & client-side PWA.**
 
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
   [![React](https://img.shields.io/badge/React-18.3-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
