@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { X, ShieldCheck, Cpu, HelpCircle, Lock, KeyRound, Github } from 'lucide-react';
+import { X, ShieldCheck, Cpu, HelpCircle, Lock, KeyRound, Github, Coffee } from 'lucide-react';
 
 export type ModalTab = 'about' | 'how-it-works' | 'faq' | 'privacy';
 
@@ -135,6 +135,27 @@ export function InfoModal({ isOpen, activeTab, onClose, onSelectTab }: InfoModal
                 >
                   <Github className="w-3.5 h-3.5" />
                   <span>View on GitHub</span>
+                </a>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-700/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="space-y-0.5">
+                  <h4 className="font-bold text-slate-900 dark:text-white text-xs flex items-center gap-1.5">
+                    <Coffee className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                    Support the Project
+                  </h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Free, offline, and open forever. Buy a coffee to support domain & maintenance.
+                  </p>
+                </div>
+                <a
+                  href="https://buymeacoffee.com/jakib"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold transition-colors shadow-xs"
+                >
+                  <Coffee className="w-3.5 h-3.5" />
+                  <span>Buy me a coffee</span>
                 </a>
               </div>
             </div>

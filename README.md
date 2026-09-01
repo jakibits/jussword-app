@@ -12,8 +12,9 @@
   [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
   [![Vite](https://img.shields.io/badge/Vite-7.3-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
   [![Zero Telemetry](https://img.shields.io/badge/Privacy-100%25%20Offline-10B981?style=flat-square&logo=shield&logoColor=white)](#-privacy--security)
+  [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support-FFDD00?style=flat-square&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/jakib)
 
-  [**Live Demo »**](https://jussword.app) • [**Report Bug »**](https://github.com/jakibits/jussword-app/issues) • [**Request Feature »**](https://github.com/jakibits/jussword-app/issues)
+  [**Live Demo »**](https://jussword.vercel.app) • [**Sponsor »**](https://buymeacoffee.com/jakib) • [**Report Bug »**](https://github.com/jakibits/jussword-app/issues) • [**Request Feature »**](https://github.com/jakibits/jussword-app/issues)
 
 </div>
 

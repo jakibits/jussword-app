@@ -16,6 +16,7 @@ import {
   Github,
   Volume2,
   VolumeX,
+  Coffee,
 } from 'lucide-react';
 import {
   generatePassword,
@@ -366,6 +367,20 @@ export default function App() {
             <Github className="w-3.5 h-3.5 text-slate-700 dark:text-slate-200" />
             <span className="hidden sm:inline">GitHub</span>
           </a>
+
+          {/* Buy Me a Coffee */}
+          <a
+            href="https://buymeacoffee.com/jakib"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Support on Buy Me a Coffee"
+            aria-label="Buy Me a Coffee"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-amber-50/90 dark:bg-amber-950/40 backdrop-blur-md border border-amber-200/80 dark:border-amber-600/30 text-amber-700 dark:text-amber-300 shadow-xs hover:bg-amber-100 dark:hover:bg-amber-950/60 hover:border-amber-300 dark:hover:border-amber-500/40 active:scale-95 transition-all duration-200 cursor-pointer"
+          >
+            <Coffee className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+            <span className="hidden sm:inline">Coffee</span>
+          </a>
+
           <ThemeToggle />
         </div>
       </header>
@@ -1023,9 +1038,9 @@ export default function App() {
           </button>
         </div>
 
-        {/* Author Credit */}
-        <div className="text-[10px] sm:text-[11px] text-slate-400 dark:text-slate-600">
-          crafted with 💙 by{' '}
+        {/* Author & Sponsor Credit */}
+        <div className="text-[10px] sm:text-[11px] text-slate-400 dark:text-slate-600 flex items-center justify-center gap-1.5 flex-wrap">
+          <span>crafted with 💙 by</span>
           <a
             href="https://bio.link/jakib"
             target="_blank"
@@ -1033,6 +1048,16 @@ export default function App() {
             className="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
           >
             jakib
+          </a>
+          <span>•</span>
+          <a
+            href="https://buymeacoffee.com/jakib"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 font-medium text-amber-600 dark:text-amber-400 hover:underline"
+          >
+            <Coffee className="w-3 h-3" />
+            <span>buy me a coffee</span>
           </a>
         </div>
       </footer>
