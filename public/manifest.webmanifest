@@ -1,0 +1,21 @@
+{
+  "id": "/",
+  "name": "jussword - just a simple secure password generator",
+  "short_name": "jussword",
+  "description": "Generate strong, memorable, and pronounceable passwords offline in your browser. 100% client-side with zero data collection.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#090A0F",
+  "theme_color": "#090A0F",
+  "categories": ["utilities", "security", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

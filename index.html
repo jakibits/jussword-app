@@ -2,20 +2,85 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/jussword-favicon2.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>jussword - just a simple secure password generator</title>
-    <meta property="og:title" content="jussword" />
-    <meta property="og:description" content="just a simple secure password generator" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="jussword" />
+    
+    <!-- Primary Meta Tags -->
+    <title>jussword - Simple, Secure &amp; Memorable Password Generator</title>
+    <meta name="title" content="jussword - Simple, Secure &amp; Memorable Password Generator" />
+    <meta
+      name="description"
+      content="Generate strong, memorable, and pronounceable passwords offline in your browser. Phonetic pseudo-words, Diceware passphrases, PINs, and customizable character sets with zero data transmission."
+    />
+    <meta
+      name="keywords"
+      content="password generator, secure password generator, memorable password generator, pronounceable password, pseudo words password, offline password generator, passphrase generator, pin generator, strong password generator, client-side password tool"
+    />
+    <meta name="author" content="jakib" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#090A0F" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F8F9FA" media="(prefers-color-scheme: light)" />
+
+    <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/jussword-opengraph-preview.png" />
+    <meta property="og:url" content="https://jussword.app/" />
+    <meta property="og:title" content="jussword - Simple, Secure &amp; Memorable Password Generator" />
+    <meta
+      property="og:description"
+      content="Generate strong, memorable, and pronounceable passwords right in your browser. 100% offline & cryptographically secure."
+    />
+    <meta property="og:image" content="/og-preview.svg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:type" content="image/svg+xml" />
+    <meta property="og:site_name" content="jussword" />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="jussword" />
-    <meta name="twitter:description" content="just a simple secure password generator" />
+    <meta name="twitter:url" content="https://jussword.app/" />
+    <meta name="twitter:title" content="jussword - Simple, Secure &amp; Memorable Password Generator" />
+    <meta
+      name="twitter:description"
+      content="Fast, memorable, and cryptographically secure passwords generated 100% client-side in your browser."
+    />
     <meta name="twitter:image" content="/og-preview.svg" />
+
+    <!-- Geo & Localization Tags -->
+    <meta name="geo.region" content="US" />
+    <meta name="geo.placename" content="Global" />
+    <meta name="language" content="English" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="General" />
+
+    <!-- JSON-LD Structured Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "jussword",
+        "url": "https://jussword.app",
+        "description": "A simple, secure, and memorable password generator that runs 100% client-side in your browser.",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "jakib",
+          "url": "https://bio.link/jakib"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
