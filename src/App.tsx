@@ -141,6 +141,17 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState<ModalTab>('about');
   const [soundOn, setSoundOn] = useState(() => isSoundEnabled());
+  const [coffeeNudge, setCoffeeNudge] = useState(false);
+
+  const coffeeNudgeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const triggerCoffeeNudge = useCallback(() => {
+    if (coffeeNudgeTimeoutRef.current) clearTimeout(coffeeNudgeTimeoutRef.current);
+    setCoffeeNudge(true);
+    coffeeNudgeTimeoutRef.current = setTimeout(() => {
+      setCoffeeNudge(false);
+    }, 2400);
+  }, []);
 
   const toggleSound = () => {
     const next = !soundOn;
@@ -219,13 +230,18 @@ export default function App() {
   }, [handleGenerate, isUserEditing]);
 
   // Keyboard shortcut listener (Space/R to regenerate, C to copy)
+  const handleManualRegenerate = useCallback(() => {
+    handleGenerate();
+    triggerCoffeeNudge();
+  }, [handleGenerate, triggerCoffeeNudge]);
+
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (document.activeElement === inputRef.current) return;
 
       if (e.code === 'Space' || e.key.toLowerCase() === 'r') {
         e.preventDefault();
-        handleGenerate();
+        handleManualRegenerate();
       } else if (
         (e.key.toLowerCase() === 'c' && !e.metaKey && !e.ctrlKey) ||
         ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'c' && window.getSelection()?.toString() === '')
@@ -278,6 +294,7 @@ export default function App() {
       hapticCopy();
       setCopied(true);
       showToast('Copied to clipboard!');
+      triggerCoffeeNudge();
       if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
       copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
     } else {
@@ -368,18 +385,30 @@ export default function App() {
             <span className="hidden sm:inline">GitHub</span>
           </a>
 
-          {/* Buy Me a Coffee */}
-          <a
-            href="https://buymeacoffee.com/jakib"
-            target="_blank"
-            rel="noopener noreferrer"
-            title="Support on Buy Me a Coffee"
-            aria-label="Buy Me a Coffee"
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-amber-50/90 dark:bg-amber-950/40 backdrop-blur-md border border-amber-200/80 dark:border-amber-600/30 text-amber-700 dark:text-amber-300 shadow-xs hover:bg-amber-100 dark:hover:bg-amber-950/60 hover:border-amber-300 dark:hover:border-amber-500/40 active:scale-95 transition-all duration-200 cursor-pointer"
-          >
-            <Coffee className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-            <span className="hidden sm:inline">Coffee</span>
-          </a>
+          {/* Buy Me a Coffee with Attention Nudge */}
+          <div className="relative">
+            <a
+              href="https://buymeacoffee.com/jakib"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Support on Buy Me a Coffee"
+              aria-label="Buy Me a Coffee"
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold backdrop-blur-md border transition-all duration-300 cursor-pointer active:scale-95 ${
+                coffeeNudge
+                  ? 'animate-coffee-nudge bg-amber-100 dark:bg-amber-900/60 border-amber-400 dark:border-amber-500 text-amber-950 dark:text-amber-100 ring-2 ring-amber-400/80 dark:ring-amber-500/80 shadow-lg shadow-amber-500/25 scale-105'
+                  : 'bg-amber-50/90 dark:bg-amber-950/40 border-amber-200/80 dark:border-amber-600/30 text-amber-700 dark:text-amber-300 shadow-xs hover:bg-amber-100 dark:hover:bg-amber-950/60 hover:border-amber-300 dark:hover:border-amber-500/40'
+              }`}
+            >
+              <Coffee className={`w-3.5 h-3.5 text-amber-600 dark:text-amber-400 ${coffeeNudge ? 'animate-bounce' : ''}`} />
+              <span className="hidden sm:inline">Coffee</span>
+            </a>
+
+            {coffeeNudge && (
+              <div className="absolute -bottom-7 right-0 pointer-events-none z-30 animate-tooltip-fade whitespace-nowrap bg-slate-900/95 dark:bg-amber-500 text-amber-300 dark:text-slate-950 font-bold text-[10px] px-2 py-0.5 rounded-full shadow-lg border border-amber-400/40 dark:border-amber-300 flex items-center gap-1">
+                <span>☕ Tip creator</span>
+              </div>
+            )}
+          </div>
 
           <ThemeToggle />
         </div>
@@ -508,7 +537,7 @@ export default function App() {
                 <div className="grid grid-cols-2 border-t border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-[#0E1019]/50">
                   <button
                     type="button"
-                    onClick={handleGenerate}
+                    onClick={handleManualRegenerate}
                     data-testid="button-generate"
                     aria-label="Generate new password"
                     className="flex items-center justify-center gap-2 py-3 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-white dark:hover:bg-[#161926] border-r border-slate-100 dark:border-white/5 transition-all duration-150 active:scale-[0.99] cursor-pointer"
