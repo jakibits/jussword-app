@@ -29,10 +29,12 @@
   ],
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/sync-context.mjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json"
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
+    "update-context": "node scripts/sync-context.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.344.0",

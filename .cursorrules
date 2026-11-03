@@ -1,0 +1,17 @@
+# Cursor Rules for jussword
+
+You are working on jussword (just a simple secure password generator).
+
+CRITICAL FIRST STEP:
+Read PROJECT_CONTEXT.md in the workspace root before planning or modifying code. It is the single source of truth for the codebase architecture, design tokens, security rules, and past bug traps.
+
+CORE RULES:
+1. Pure Client-Side CSPRNG: Always use `window.crypto.getRandomValues()`. Never use `Math.random()`.
+2. Absolute Privacy: Zero telemetry, tracking, or network calls sending passwords.
+3. Lightweight Stack: React 18 + Tailwind CSS 3.4 + Lucide React. Do not install heavy UI component libraries (no Radix, Shadcn, MUI, Chakra).
+4. No-Scroll Bento Layout: UI must fit in single desktop viewport without vertical scrollbar.
+5. Prevent FOUT: Do not edit or defer the pre-paint inline theme script in `index.html` `<head>`.
+6. Silent Cold-Mount: Audio synthesizer must not trigger on page load (guarded by `isInitialMount` in `src/App.tsx`).
+7. Sayable Pseudo-Word Entropy: Ensure `calculateEntropy` evaluates character sets for pseudo-words, not Diceware pool size.
+8. Background: Keep low-GPU DOM "Living Entropy Field" in `src/components/InteractiveBackground.tsx`. No flashlight/torch circles, no purple halos.
+9. Deployments: Always push to both branches (`git push origin master && git push origin master:main`).

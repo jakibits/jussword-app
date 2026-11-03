@@ -18,6 +18,8 @@
 
 </div>
 
+> 🤖 **AI AGENT & LLM INSTRUCTIONS**: Before making or planning any code changes, read [**`PROJECT_CONTEXT.md`**](PROJECT_CONTEXT.md) for critical architectural invariants, design tokens, security rules, and known bug traps.
+
 ---
 
 ## 💡 Why jussword?
@@ -109,25 +111,37 @@ Calculates mathematical entropy in bits ($E = L \times \log_2(N)$) and realistic
 
 ```text
 jussword/
+├── .github/
+│   └── copilot-instructions.md # GitHub Copilot custom instructions
 ├── public/                     # Static assets (favicons, OpenGraph cards)
-│   ├── favicon.svg             # j* Brand SVG icon
+│   ├── favicon.svg             # Minimalist j* brand lockup icon
+│   ├── manifest.webmanifest    # PWA configuration
+│   ├── sw.js                   # Offline caching service worker
 │   └── og-preview.svg          # Social preview image
+├── scripts/
+│   └── sync-context.mjs        # Auto-sync hook updating PROJECT_CONTEXT.md metadata
 ├── src/
 │   ├── components/
 │   │   ├── AnimatedLogo.tsx    # Smooth morphing j* -> jussword logo
 │   │   ├── InfoModal.tsx       # Accessible SEO/GEO modal dialogs
+│   │   ├── InteractiveBackground.tsx # Low-GPU DOM "Living Entropy Field"
 │   │   └── ThemeToggle.tsx     # Light/Dark/System theme switcher
 │   ├── context/
 │   │   ├── theme-context.ts    # Theme state context & useTheme hook
 │   │   └── ThemeContext.tsx    # ThemeProvider wrapper
 │   ├── utils/
+│   │   ├── haptics.ts          # Web Audio API sound synthesizer & vibration haptics
 │   │   └── passwordGenerator.ts # Core CSPRNG algorithms & Shannon entropy analyzer
 │   ├── App.tsx                 # Main application view & responsive bento layout
 │   ├── index.css               # Design system tokens, custom range slider, animations
 │   └── main.tsx                # Application root
+├── AGENT.md                    # Universal AI agent instructions pointer
+├── CLAUDE.md                   # Claude Code instructions pointer
+├── .cursorrules                # Cursor & Windsurf IDE rules pointer
 ├── eslint.config.js            # ESLint 9 configuration
-├── index.html                  # HTML entry with OpenGraph, JSON-LD Schema & GEO tags
+├── index.html                  # HTML entry with FOUT script, OpenGraph & GEO tags
 ├── package.json
+├── PROJECT_CONTEXT.md          # Master architectural context & AI rulebook
 ├── LICENSE                     # MIT License
 └── README.md
 ```
