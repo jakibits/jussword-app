@@ -1,22 +1,37 @@
 import { useEffect, useState, ReactNode } from 'react';
 import { Theme, ThemeContext } from './theme-context';
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('auto');
-  const [effectiveTheme, setEffectiveTheme] = useState<'light' | 'dark'>('light');
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
+function getInitialTheme(): Theme {
+  if (typeof window === 'undefined') return 'auto';
+  try {
     const saved = localStorage.getItem('theme') as Theme | null;
     if (saved && ['light', 'dark', 'auto'].includes(saved)) {
-      setThemeState(saved);
+      return saved;
     }
-    setMounted(true);
-  }, []);
+  } catch {
+    // ignore
+  }
+  return 'auto';
+}
+
+function getInitialEffectiveTheme(t: Theme): 'light' | 'dark' {
+  if (typeof window === 'undefined') return 'dark';
+  if (t === 'dark') return 'dark';
+  if (t === 'light') return 'light';
+  try {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  } catch {
+    return 'dark';
+  }
+}
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setThemeState] = useState<Theme>(getInitialTheme);
+  const [effectiveTheme, setEffectiveTheme] = useState<'light' | 'dark'>(() =>
+    getInitialEffectiveTheme(getInitialTheme())
+  );
 
   useEffect(() => {
-    if (!mounted) return;
-
     const updateTheme = () => {
       let activeTheme: 'light' | 'dark';
 
@@ -29,6 +44,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       setEffectiveTheme(activeTheme);
       document.documentElement.setAttribute('data-theme', activeTheme);
       document.documentElement.classList.toggle('dark', activeTheme === 'dark');
+      document.documentElement.style.backgroundColor = activeTheme === 'dark' ? '#090A0F' : '#F8F9FA';
     };
 
     updateTheme();
@@ -39,7 +55,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       mediaQuery.addEventListener('change', handler);
       return () => mediaQuery.removeEventListener('change', handler);
     }
-  }, [theme, mounted]);
+  }, [theme]);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);

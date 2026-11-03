@@ -291,7 +291,11 @@ export function generatePassword(options: GeneratePasswordOptions): string {
 /**
  * Calculate Shannon Entropy and security analysis
  */
-export function analyzePassword(password: string, vibe: VibePreset = 'all'): PasswordAnalysis {
+export function analyzePassword(
+  password: string,
+  vibe: VibePreset = 'all',
+  memorableStyle?: MemorableStyle
+): PasswordAnalysis {
   if (!password) {
     return {
       entropyBits: 0,
@@ -320,10 +324,22 @@ export function analyzePassword(password: string, vibe: VibePreset = 'all'): Pas
 
   // Entropy calculation
   let entropyBits = 0;
-  if ((vibe === 'memorable') && (password.includes('-') || password.includes('.') || password.includes('_') || password.includes(' '))) {
-    const parts = password.split(/[-._\s]/).filter(Boolean);
-    entropyBits = Math.round(parts.length * Math.log2(WORD_LIST.length));
+  const parts = password.split(/[-._\s]/).filter(Boolean);
+
+  // A password is only evaluated as a Diceware passphrase if it is explicitly in passphrase style
+  // (or not in pseudowords style) AND contains at least 2 distinct delimiter-separated parts.
+  const isPassphrase =
+    (memorableStyle === 'passphrase' || (vibe === 'memorable' && memorableStyle !== 'pseudowords')) &&
+    parts.length >= 2;
+
+  if (isPassphrase) {
+    // Diceware word entropy: ~13 bits/word (EFF Diceware standard) + capitalization + numbers
+    const wordEntropy = parts.length * 13;
+    const numEntropy = hasNumbers ? 6 : 0;
+    const capEntropy = hasUppercase ? Math.min(parts.length, 4) : 0;
+    entropyBits = Math.round(wordEntropy + numEntropy + capEntropy);
   } else {
+    // Character pool entropy for all standard passwords, pseudo-words, and single strings
     entropyBits = Math.round(password.length * Math.log2(poolSize));
   }
 

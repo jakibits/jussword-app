@@ -36,6 +36,7 @@ import {
 import { ThemeToggle } from './components/ThemeToggle';
 import { AnimatedLogo } from './components/AnimatedLogo';
 import { InfoModal, ModalTab } from './components/InfoModal';
+import { InteractiveBackground } from './components/InteractiveBackground';
 
 // Strength visual tokens
 const STRENGTH_CONFIG = [
@@ -183,10 +184,21 @@ export default function App() {
     toastTimeoutRef.current = setTimeout(() => setToastMessage(null), 2000);
   }, []);
 
-  const handleGenerate = useCallback(() => {
-    hapticGenerate();
-    setIsSpinning(true);
-    setTimeout(() => setIsSpinning(false), 350);
+  const isInitialMount = useRef(true);
+
+  const handleGenerate = useCallback((silent = false) => {
+    if (!silent) {
+      hapticGenerate();
+      setIsSpinning(true);
+      setTimeout(() => setIsSpinning(false), 350);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(
+          new CustomEvent('jussword:resonate', {
+            detail: { x: window.innerWidth * 0.35, y: window.innerHeight * 0.45 },
+          })
+        );
+      }
+    }
 
     const options: GeneratePasswordOptions = {
       length: vibe === 'pin' ? Math.max(4, Math.min(16, length)) : length,
@@ -225,13 +237,18 @@ export default function App() {
   // Initial and reactive generation
   useEffect(() => {
     if (!isUserEditing) {
-      handleGenerate();
+      if (isInitialMount.current) {
+        isInitialMount.current = false;
+        handleGenerate(true);
+      } else {
+        handleGenerate(false);
+      }
     }
   }, [handleGenerate, isUserEditing]);
 
   // Keyboard shortcut listener (Space/R to regenerate, C to copy)
   const handleManualRegenerate = useCallback(() => {
-    handleGenerate();
+    handleGenerate(false);
     triggerCoffeeNudge();
   }, [handleGenerate, triggerCoffeeNudge]);
 
@@ -255,7 +272,10 @@ export default function App() {
   });
 
   // Password analysis memoized for zero-lag reactivity
-  const analysis = useMemo(() => analyzePassword(password, vibe), [password, vibe]);
+  const analysis = useMemo(
+    () => analyzePassword(password, vibe, memorableStyle),
+    [password, vibe, memorableStyle]
+  );
 
   // Clipboard copy handler with reliable fallback
   const handleCopy = async () => {
@@ -295,6 +315,13 @@ export default function App() {
       setCopied(true);
       showToast('Copied to clipboard!');
       triggerCoffeeNudge();
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(
+          new CustomEvent('jussword:resonate', {
+            detail: { x: window.innerWidth * 0.45, y: window.innerHeight * 0.45 },
+          })
+        );
+      }
       if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
       copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
     } else {
@@ -349,10 +376,8 @@ export default function App() {
 
   return (
     <div className="min-h-[100dvh] bg-[#F8F9FA] dark:bg-[#090A0F] text-slate-900 dark:text-slate-100 flex flex-col justify-between relative selection:bg-indigo-500 selection:text-white transition-colors duration-300">
-      {/* Ambient background light */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="ambient-glow-light dark:ambient-glow-dark w-full h-full" />
-      </div>
+      {/* Interactive Cryptographic Entropy Ambient Background */}
+      <InteractiveBackground />
 
       {/* Top Header Bar - Scales with screen width */}
       <header className="w-full max-w-sm sm:max-w-md md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 pt-3 sm:pt-5 pb-1 flex items-center justify-between z-20">
